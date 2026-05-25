@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>J.A.R.V.I.S. Core Systems Dashboard</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=Orbitron:wght@400;500;700;900&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <meta name="description" content="AI Assistant Visual Interface">
+</head>
+
+<body class="jarvis-mode">
+
+    <div class="background-grid"></div>
+    <div class="vignette"></div>
+
+    <!-- Mode Switcher -->
+    <div class="mode-control">
+        <span>UI MODE:</span>
+        <label class="switch">
+            <input type="checkbox" id="modeToggle" checked>
+            <span class="slider"></span>
+        </label>
+        <span id="modeLabel" class="mode-label">COMBAT</span>
+
+        <span style="margin-left: 20px;">INPUT:</span>
+        <label class="switch">
+            <input type="checkbox" id="inputModeToggle">
+            <span class="slider"></span>
+        </label>
+        <span id="inputModeLabel" class="mode-label" style="color: var(--secondary-color);">VOICE</span>
+
+        <span style="margin-left: 20px;">VOICE ENGINE:</span>
+        <select id="ttsEngineSelect" style="background: transparent; color: var(--secondary-color); border: 1px solid var(--primary-color); padding: 2px 5px; font-family: var(--font-main); outline: none; margin-left: 5px;">
+            <option value="sapi" style="background: #000; color: #fff;">SAPI (Fast)</option>
+            <option value="pyttsx3" style="background: #000; color: #fff;">PYTTSX3</option>
+            <option value="gtts" style="background: #000; color: #fff;">gTTS (Natural)</option>
+        </select>
+    </div>
+
+    <!-- Top Options -->
+    <div class="top-options">
+        <div class="option-item created-by-option">
+            [ CREATED BY ]
+            <div class="creator-names">
+                <span>CHANDAN</span>
+                <span>SWAYAM</span>
+                <span>ASHUTOSH</span>
+                <span>BINAY</span>
+                <span>HIMANSHU</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Overlay Alerts -->
+    <div class="alert-overlay">SYSTEM OFFLINE</div>
+
+    <!-- Main Dashboard Container -->
+    <div class="dashboard-container">
+
+        <!-- Left Panel -->
+        <div class="side-panel left-panel">
+            <div class="hud-box">
+                <div class="hud-box-header">SYSTEM CLOCK</div>
+                <div class="time-display" id="clock">00:00:00</div>
+                <div class="date-display" id="date">YYYY-MM-DD</div>
+                <div class="os-display" id="osInfo">INITIALIZING...</div>
+            </div>
+
+            <div class="hud-box">
+                <div class="hud-box-header">MEMORY ALLOCATION</div>
+                <div class="progress-bar-container">
+                    <div class="progress-label">RAM USAGE [<span id="ramText">0%</span>]</div>
+                    <div class="progress-track">
+                        <div class="progress-fill" id="ramBar" style="width: 0%;"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="hud-box">
+                <div class="hud-box-header">AUDIO TELEMETRY</div>
+                <div class="progress-bar-container">
+                    <div class="progress-label">MASTER VOLUME [<span id="volText">0%</span>]</div>
+                    <div class="progress-track">
+                        <div class="progress-fill" id="volBar" style="width: 0%;"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="hud-box" id="storageBox">
+                <div class="hud-box-header">STORAGE ARRAY</div>
+                <div id="drivesContainer">
+                    <div class="progress-bar-container">
+                        <div class="progress-label">SCANNING DRIVES...</div>
+                        <div class="progress-track">
+                            <div class="progress-fill" style="width: 0%;"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="hud-box">
+                <div class="hud-box-header">POWER SOURCE</div>
+                <div class="progress-bar-container">
+                    <div class="progress-label">BATTERY [<span id="batteryText">0%</span>] <span id="pluggedText"
+                            style="font-size: 0.7rem; color: var(--primary-color);"></span></div>
+                    <div class="progress-track">
+                        <div class="progress-fill" id="batteryBar" style="width: 0%;"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Center Target / Arc Reactor -->
+        <div class="center-panel">
+            <div class="arc-container" id="arcContainer">
+                <div class="arc-ring ring1"></div>
+                <div class="arc-ring ring2"></div>
+                <div class="arc-ring ring3"></div>
+                <div class="arc-core"></div>
+                <div class="crosshair"></div>
+                <!-- Iron Man Helmet Animation Element -->
+                <svg id="ironManHelmet" viewBox="0 0 100 100"
+                    style="display: none; position: absolute; width: 100%; height: 100%; top: 0; left: 0; transition: all 1s ease-in-out;">
+                    <defs>
+                        <filter id="helmetGlow" x="-20%" y="-20%" width="140%" height="140%">
+                            <feGaussianBlur stdDeviation="3" result="blur" />
+                            <feComposite in="SourceGraphic" in2="blur" operator="over" />
+                        </filter>
+                    </defs>
+                    <path d="M 20,80 C 10,50 20,10 50,10 C 80,10 90,50 80,80 L 60,95 L 50,90 L 40,95 Z" fill="none"
+                        stroke="var(--primary-color)" stroke-width="2" filter="url(#helmetGlow)" />
+                    <path d="M 28,75 L 35,30 C 45,25 55,25 65,30 L 72,75 L 60,85 L 50,80 L 40,85 Z" fill="none"
+                        stroke="var(--primary-color)" stroke-width="1" />
+                    <!-- Glowing Eyes -->
+                    <path d="M 32,45 L 44,48 L 47,40 Z" fill="#fff" filter="url(#helmetGlow)" />
+                    <path d="M 68,45 L 56,48 L 53,40 Z" fill="#fff" filter="url(#helmetGlow)" />
+                    <!-- Mouth -->
+                    <line x1="40" y1="70" x2="60" y2="70" stroke="var(--primary-color)" stroke-width="1.5"
+                        filter="url(#helmetGlow)" />
+                </svg>
+            </div>
+
+            <div class="status-readout">ALL SYSTEMS NOMINAL</div>
+
+            <!-- Text Mode Form -->
+            <div class="text-mode-container" id="textModeContainer">
+                <div class="hud-box-header text-mode-header">DIRECT COMM LINK</div>
+                <form id="textForm" autocomplete="off">
+                    <input type="text" id="textInput" placeholder="Awaiting Input..." required>
+                    <button type="submit">SEND</button>
+                </form>
+                <div class="text-response" id="textResponse"></div>
+            </div>
+            <div class="comms-log" id="commsLog"></div>
+        </div>
+
+        <!-- Right Panel -->
+        <div class="side-panel right-panel">
+            <div class="hud-box">
+                <div class="hud-box-header">PROCESSOR METRICS</div>
+                <div class="progress-bar-container">
+                    <div class="progress-label">CPU LOAD [<span id="cpuText">0%</span>]</div>
+                    <div class="progress-track">
+                        <div class="progress-fill" id="cpuBar" style="width: 0%;"></div>
+                    </div>
+                </div>
+                <!-- Mini historical chart visualization placeholder -->
+                <div class="graph-container" id="cpuGraph">
+                    <!-- Graph bars generated by JS -->
+                </div>
+            </div>
+
+            <div class="hud-box" id="gpuBox">
+                <div class="hud-box-header">GRAPHICS / GPU</div>
+                <div class="gpu-info" id="gpuInfo">Scanning...</div>
+            </div>
+
+            <div class="hud-box">
+                <div class="hud-box-header">NETWORK COMMS</div>
+                <div class="network-name" id="networkName"
+                    style="color: var(--primary-color); font-size: 0.9rem; margin-bottom: 5px; font-family: var(--font-heading);">
+                    SCANNING...</div>
+                <div class="network-list" id="networkList">
+                    <div class="net-item">Establishing Connection...</div>
+                </div>
+            </div>
+
+            <div class="hud-box">
+                <div class="hud-box-header">AUDIO PLAYBACK</div>
+                <div class="music-info" id="musicInfo">
+                    <div class="song-name" id="songName">NO MEDIA PLAYING</div>
+                    <div class="equalizer" id="equalizer" style="display: none;">
+                        <span class="bar"></span>
+                        <span class="bar"></span>
+                        <span class="bar"></span>
+                        <span class="bar"></span>
+                        <span class="bar"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Decorative Elements -->
+    <div class="corner-decor top-left"></div>
+    <div class="corner-decor top-right"></div>
+    <div class="corner-decor bottom-left"></div>
+    <div class="corner-decor bottom-right"></div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
